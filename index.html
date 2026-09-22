@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Explore how flexible load timing changes energy cost within an hourly power budget. A private, browser-local scheduling lab."
+    />
+    <title>Load Window — energy scheduling lab</title>
+  </head>
+  <body>
+    <a class="skip" href="#workspace">Skip to workspace</a>
+    <header>
+      <a class="brand" href="./"
+        ><span class="brand-icon" aria-hidden="true">▥</span> Load Window</a
+      ><span class="badge">ENERGY LAB / 01</span
+      ><a href="https://github.com/Christiansada/load-window">Source ↗</a>
+    </header>
+    <main id="workspace">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">A LITTLE FLEXIBILITY. A DIFFERENT ENERGY DAY.</p>
+          <h1>Same energy.<br /><span>Better timing.</span></h1>
+          <p class="lede">
+            Find a lower-cost window for flexible loads, without exceeding your
+            hourly power budget.
+          </p>
+        </div>
+        <aside class="intro-note">
+          <span class="dot"></span> Runs in your browser
+          <p>No account. No uploads.<br />Your inputs stay on this device.</p>
+          <small>Illustrative scheduling only. No equipment control.</small>
+        </aside>
+      </section>
+      <div class="workspace">
+        <section class="panel inputs" aria-labelledby="input-heading">
+          <div class="section-heading">
+            <h2 id="input-heading">01 / Set the day</h2>
+            <button id="reset" type="button" class="text-button">
+              Reset sample
+            </button>
+          </div>
+          <p class="muted">
+            Start with invented demonstration values, then explore your own
+            assumptions.
+          </p>
+          <form id="scenario" novalidate>
+            <div class="pair">
+              <label
+                >Base load (kW)<input
+                  id="base"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  required /></label
+              ><label
+                >Power cap (kW)<input
+                  id="cap"
+                  type="number"
+                  min="0.01"
+                  max="100"
+                  step="0.01"
+                  required
+              /></label>
+            </div>
+            <label for="rates">Hourly rates (cost units / kWh)</label>
+            <p class="hint" id="rate-help">
+              24 values, starting at 00:00. Spaces or commas; negative rates
+              supported. All costs use the same arbitrary unit.
+            </p>
+            <textarea
+              id="rates"
+              rows="4"
+              aria-describedby="rate-help"
+              spellcheck="false"
+            ></textarea>
+            <div class="section-heading load-heading">
+              <h2>02 / Flexible loads</h2>
+              <button id="add" type="button" class="text-button">
+                + Add load
+              </button>
+            </div>
+            <p class="hint">
+              Whole hours, same day. Each load runs continuously at constant
+              power. Finish by 24 means midnight.
+            </p>
+            <div id="loads"></div>
+            <div id="error" role="alert" tabindex="-1" hidden></div>
+            <button type="submit" class="primary">
+              Find lowest-cost schedule <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </section>
+        <section class="results" aria-labelledby="results-heading">
+          <div class="section-heading">
+            <h2 id="results-heading">03 / Read the shift</h2>
+            <span id="sample-label" class="badge">SYNTHETIC EXAMPLE</span>
+          </div>
+          <p id="status" role="status"></p>
+          <div id="output"></div>
+          <button id="export" type="button" class="secondary" disabled>
+            Download review JSON ↓
+          </button>
+          <details class="method">
+            <summary>What this model includes</summary>
+            <p>
+              One 24-hour day, up to three loads, one-hour slots, constant base
+              load, and energy-only rates. Every allowed start combination is
+              checked. Equal-cost schedules choose the earliest start for the
+              first load, then the next.
+            </p>
+            <p>
+              Cost includes base load. The power cap is an hourly model
+              constraint, not an electrical safety rating. No startup surges,
+              losses, variable cycles, taxes, demand charges, solar, or
+              daylight-saving days. Results are conditional on your assumptions,
+              not a bill forecast.
+            </p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <span>Load Window · Open source under MIT</span
+      ><span>Built for exploring, explaining, and checking.</span>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
